@@ -8,19 +8,18 @@ public class Bus extends publicTransportation {
     double refueledNow;
     int busNumber;  // 고유값?
     int cost;  // 고정값
-    boolean operation;
     String workNow;
     String alert;
 
     Bus(int busNumber, int passengerCountNow){
         super();
+        this.passengerCountNow = passengerCountNow;
         this.passengerCountMax =  30;
         this.refueledNow = 100;
         this.cost = 1000;
         this.busNumber = busNumber;
     }
-    
-    // 버스 상태 변경 운행
+
     public void transportationOperate(boolean operation, double refueledUse, double refuelCharging){
         refueledNow = refueledNow  - refueledUse + refuelCharging;
             if(refueledNow == 0 || !operation){
@@ -58,9 +57,9 @@ public class Bus extends publicTransportation {
     }
 
     public static void main(String[] args) {
-        Bus bus1 = new Bus(606, 10 );
+        Bus bus1 = new Bus(606, 0 );
         System.out.println("*알림* " + bus1.busNumber+"번 버스가 생성됐습니다.");
-        Bus bus2 = new Bus(6631, 20);
+        Bus bus2 = new Bus(6631, 0);
         System.out.println("*알림* " + bus2.busNumber+"번 버스가 생성됐습니다.");
         bus1.onBoard("운행",  2);
         System.out.println("탑승 승객 수: "+bus1.passengerCountNow);
@@ -82,9 +81,5 @@ public class Bus extends publicTransportation {
         System.out.println("주유량: "+ bus1.refueledNow);
         System.out.println("상태: " + bus1.workNow);
         System.out.println(bus1.alert);
-
-
-
-
     }
 }
