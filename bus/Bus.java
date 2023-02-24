@@ -1,32 +1,27 @@
 package bus;
 
-public class Bus {
+import publictransportation.publicTransportation;
+
+public class Bus extends publicTransportation {
     int passengerCountNow;
-    int passengerCountNew;
     int passengerCountMax;  // 고정값
-    int cost;  // 고정값
-    int busNumber;  // 고유값?
     double refueledNow;
-    double refuelCharging;
-    double speedNow;
-    double acceleratedSpeed;
+    int busNumber;  // 고유값?
+    int cost;  // 고정값
     boolean operation;
     String workNow;
     String alert;
 
     Bus(int busNumber, int passengerCountNow){
-        alert = "";
-        cost = 1200;
-        speedNow = 0;
-        workNow = "운행";
-        operation = true;
-        refueledNow = 100;
-        passengerCountMax =  30;
+        super();
+        this.passengerCountMax =  30;
+        this.refueledNow = 100;
+        this.cost = 1000;
         this.busNumber = busNumber;
     }
     
     // 버스 상태 변경 운행
-    public void busOperate(boolean operation, double refueledUse, double refuelCharging){
+    public void transportationOperate(boolean operation, double refueledUse, double refuelCharging){
         refueledNow = refueledNow  - refueledUse + refuelCharging;
             if(refueledNow == 0 || !operation){
                 workNow="차고지행";
@@ -42,7 +37,9 @@ public class Bus {
 
     public void onBoard(String workNow, int passengerCountNew){
         if (workNow.equals("운행") && (passengerCountNow + passengerCountNew) < passengerCountMax){
+            cost = 1000;
             passengerCountNow += passengerCountNew;
+            cost = passengerCountNew*cost;
         }
         else {
             passengerCountNow = 0;
@@ -69,19 +66,19 @@ public class Bus {
         System.out.println("탑승 승객 수: "+bus1.passengerCountNow);
         System.out.println("잔여 승객 수: "+(bus1.passengerCountMax-bus1.passengerCountNow));
         System.out.println("요금 확인: " + bus1.cost);
-        bus1.busOperate(true, 50, 0);
+        bus1.transportationOperate(true, 50, 0);
         System.out.println("주유량: "+ bus1.refueledNow);
-        bus1.busOperate(false, 0, 10);
+        bus1.transportationOperate(false, 0, 10);
         System.out.println("상태: " + bus1.workNow);
         System.out.println("주유량: " + bus1.refueledNow);
-        bus1.busOperate(true, 0, 0);
+        bus1.transportationOperate(true, 0, 0);
         bus1.onBoard("운행", 45);
         System.out.println(bus1.alert);
         bus1.onBoard("운행", 5);
         System.out.println("탑승 승객 수: "+bus1.passengerCountNow);
-        System.out.println("잔여 승객 수: "+(bus1.passengerCountMax-bus2.passengerCountNow));
+        System.out.println("잔여 승객 수: "+(bus1.passengerCountMax-bus1.passengerCountNow));
         System.out.println("요금: "+bus1.cost);
-        bus1.busOperate(true, 55, 0);
+        bus1.transportationOperate(true, 55, 0);
         System.out.println("주유량: "+ bus1.refueledNow);
         System.out.println("상태: " + bus1.workNow);
         System.out.println(bus1.alert);
